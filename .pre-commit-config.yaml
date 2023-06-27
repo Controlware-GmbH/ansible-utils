@@ -13,6 +13,13 @@ repos:
     hooks:
       - id: black
 
+  - repo: https://github.com/pycqa/pylint
+    rev: "v2.17.4"
+    hooks:
+      - id: pylint
+        name: Check for Linting errors on Python files
+        types: [python]
+
   - repo: https://github.com/adrienverge/yamllint.git
     rev: "v1.32.0"
     hooks:
