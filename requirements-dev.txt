@@ -1,0 +1,6 @@
+ansible-core>=2.9
+black
+pre-commit
+pymarkdownlnt
+pytest
+yamllint
