@@ -1,6 +1,8 @@
 [MESSAGES CONTROL]
 disable=
+    consider-using-f-string,
     import-error,
     missing-class-docstring,
     missing-function-docstring,
     too-few-public-methods,
+    too-many-branches,
