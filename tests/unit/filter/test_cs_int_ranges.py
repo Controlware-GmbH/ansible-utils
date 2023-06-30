@@ -1,6 +1,6 @@
 """Pytest test definitions for cs_int_ranges filter"""
 import pytest
-from controlware.utils.plugins.filter.integer_ranges import FilterModule, cs_int_ranges
+from controlware.utils.plugins.filter.cs_int_ranges import FilterModule, cs_int_ranges
 
 
 TEST_PAIRS = [
