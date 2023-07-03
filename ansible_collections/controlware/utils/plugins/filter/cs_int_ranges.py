@@ -1,5 +1,6 @@
 """Ansible and Jinja2 filter for handling comma-separated integer range lists"""
-from __future__ import absolute_import, annotations, division, print_function
+from __future__ import absolute_import, division, print_function
+from __future__ import annotations
 
 
 def check_integer_value(value: str | int, max_int: int) -> int:

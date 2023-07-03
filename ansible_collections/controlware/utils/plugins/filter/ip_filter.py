@@ -1,5 +1,6 @@
 """Ansible and Jinja2 filters for handling IP objects"""
-from __future__ import absolute_import, annotations, division, print_function
+from __future__ import absolute_import, division, print_function
+from __future__ import annotations
 from ipaddress import (
     ip_address,
     ip_network,

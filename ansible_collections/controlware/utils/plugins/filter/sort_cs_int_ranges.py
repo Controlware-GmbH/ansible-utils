@@ -1,5 +1,6 @@
 """Ansible and Jinja2 filter for sorting comma-separated integer range lists"""
-from __future__ import absolute_import, annotations, division, print_function
+from __future__ import absolute_import, division, print_function
+from __future__ import annotations
 
 
 def sort_cs_int_ranges(ranges_list: list[str]) -> list[str]:

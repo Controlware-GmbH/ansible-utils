@@ -1,5 +1,6 @@
 """Ansible and Jinja2 filter for sorting interface names of different vendors and platforms"""
-from __future__ import absolute_import, annotations, division, print_function
+from __future__ import absolute_import, division, print_function
+from __future__ import annotations
 import re
 from ansible.errors import AnsibleFilterError
 from ansible_collections.controlware.utils.plugins.module_utils.interface_set import (
