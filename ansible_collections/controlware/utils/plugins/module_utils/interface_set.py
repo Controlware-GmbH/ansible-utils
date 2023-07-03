@@ -1,5 +1,5 @@
 """Helper class to handle interfaces"""
-from __future__ import absolute_import, division, print_function
+from __future__ import absolute_import, annotations, division, print_function
 
 from ansible_collections.controlware.utils.plugins.module_utils.interface import (
     Interface,
