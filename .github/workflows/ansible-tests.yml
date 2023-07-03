@@ -29,44 +29,51 @@ jobs:
       fail-fast: false
       matrix:
         python_version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
-        ansible-core_version: ["2.11", "2.12", "2.13", "2.14", "2.15"]
-        enabled: [true]
+        ansible_core_version: ["2.11", "2.12", "2.13", "2.14", "2.14"]
         include:
-          - ansible-core_version: "2.12"
-            python_version: "3.7"
-            enabled: false
-          - ansible-core_version: "2.13"
-            python_version: "3.7"
-            enabled: false
-          - ansible-core_version: "2.14"
-            python_version: "3.7"
-            enabled: false
-          - ansible-core_version: "2.14"
-            python_version: "3.8"
-            enabled: false
-          - ansible-core_version: "2.15"
-            python_version: "3.7"
-            enabled: false
-          - ansible-core_version: "2.15"
-            python_version: "3.8"
-            enabled: false
-    if: matrix.enabled
+          - python_version: "3.7"
+            ansible_core_version: "2.11"
+            enabled: "yes"
+          - python_version: "3.8"
+            ansible_core_version: "2.11"
+            enabled: "yes"
+          - python_version: "3.8"
+            ansible_core_version: "2.12"
+            enabled: "yes"
+          - python_version: "3.8"
+            ansible_core_version: "2.13"
+            enabled: "yes"
+          - python_version: "3.9"
+            enabled: "yes"
+          - python_version: "3.10"
+            enabled: "yes"
+          - python_version: "3.11"
+            enabled: "yes"
     steps:
-      - uses: actions/checkout@v3
+      - if: ${{ matrix.enabled }}
+        uses: actions/checkout@v3
       - name: Set up Python 3
+        if: ${{ matrix.enabled }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python_version }}
-      - name: Install requirements
+      - name: Upgrade pip
+        if: ${{ matrix.enabled }}
         run: |
-          pip install --upgrade ansible-core${{ matrix.ansible-core_version }}
-          pip install --upgrade -r \
-          requirements-ansible-test_${{ matrix.ansible-core_version }}.txt
+          pip install --upgrade pip
+      - name: Install requirements
+        if: ${{ matrix.enabled }}
+        run: |
+          pip install --upgrade ansible-core==${{ matrix.ansible_core_version }}
+          pip install --upgrade -r .github/requirements-ansible-test_\
+          ${{ matrix.ansible_core_version }}.txt
       - name: Ansible-Test Sanity
+        if: ${{ matrix.enabled }}
         run: |
           cd ansible_collections/controlware/utils/
           ansible-test sanity
       - name: Ansible-Test Units
+        if: ${{ matrix.enabled }}
         run: |
           cd ansible_collections/controlware/utils/
           ansible-test units

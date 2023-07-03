@@ -1,1 +1,5 @@
-requirements-ansible-test.txt
+pycodestyle
+pylint
+pytest
+voluptuous
+yamllint
