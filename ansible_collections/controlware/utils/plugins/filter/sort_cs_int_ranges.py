@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 from __future__ import annotations
 
+__metaclass__ = type
+
 
 def sort_cs_int_ranges(ranges_list: list[str]) -> list[str]:
     """

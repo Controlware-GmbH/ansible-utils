@@ -6,6 +6,8 @@ from ipaddress import (
     ip_network,
 )
 
+__metaclass__ = type
+
 
 def ipv4_range(start: str = "0.0.0.0", end: str = "0.0.0.0") -> list[str]:
     """

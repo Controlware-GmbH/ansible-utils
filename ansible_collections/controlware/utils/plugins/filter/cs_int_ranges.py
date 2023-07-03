@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 from __future__ import annotations
 
+__metaclass__ = type
+
 
 def check_integer_value(value: str | int, max_int: int) -> int:
     value = int(value)

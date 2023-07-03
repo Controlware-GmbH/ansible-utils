@@ -7,6 +7,8 @@ from ansible_collections.controlware.utils.plugins.module_utils.interface_set im
     InterfaceSet,
 )
 
+__metaclass__ = type
+
 
 class SortInfo:
     plattform_strings = {
