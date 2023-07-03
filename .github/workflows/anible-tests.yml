@@ -38,7 +38,7 @@ jobs:
       - name: Install requirements
         run: |
           pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }}, pycodestyle, pytest
+          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
@@ -65,7 +65,7 @@ jobs:
       - name: Install requirements
         run: |
           pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }}, pycodestyle, pytest
+          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
@@ -92,7 +92,7 @@ jobs:
       - name: Install requirements
         run: |
           pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }}, pycodestyle, pytest
+          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
@@ -120,7 +120,7 @@ jobs:
       - name: Install requirements
         run: |
           pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }}, pycodestyle, pytest
+          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
@@ -148,7 +148,7 @@ jobs:
       - name: Install requirements
         run: |
           pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }}, pycodestyle, pytest
+          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
