@@ -26,9 +26,11 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [pre_commit]
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         python_version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        ansible_core_version: ["=2.9", "=2.10", "=2.11", "=2.12", "=2.13",
+                               "=2.14", "=2.15"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3
@@ -37,7 +39,7 @@ jobs:
           python-version: ${{ matrix.python_version }}
       - name: Install ansible-core
         run: |
-          pip install ansible-core>=2.9
+          pip install ansible-core${{ matrix.ansible_core_version }}
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
