@@ -76,4 +76,4 @@ jobs:
         if: ${{ matrix.enabled }}
         run: |
           cd ansible_collections/controlware/utils/
-          ansible-test units
+          ansible-test units --venv
