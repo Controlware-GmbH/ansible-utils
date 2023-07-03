@@ -22,58 +22,74 @@ jobs:
         run: |
           pre-commit run --all-files --color always
 
-  ansible-testing:
+  ansible_test_sanity:
     runs-on: ubuntu-22.04
     needs: [pre_commit]
     strategy:
       fail-fast: false
       matrix:
-        python_version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
-        ansible_core_version: ["2.11", "2.12", "2.13", "2.14", "2.14"]
+        ansible_core_version: ["2.11", "2.12", "2.13", "2.14", "2.15"]
         include:
-          - python_version: "3.7"
-            ansible_core_version: "2.11"
-            enabled: "yes"
-          - python_version: "3.8"
-            ansible_core_version: "2.11"
-            enabled: "yes"
-          - python_version: "3.8"
-            ansible_core_version: "2.12"
-            enabled: "yes"
-          - python_version: "3.8"
-            ansible_core_version: "2.13"
-            enabled: "yes"
-          - python_version: "3.9"
-            enabled: "yes"
-          - python_version: "3.10"
-            enabled: "yes"
-          - python_version: "3.11"
-            enabled: "yes"
+          - ansible_core_version: "2.11"
+            python_version: "3.7"
+          - ansible_core_version: "2.12"
+            python_version: "3.8"
+          - ansible_core_version: "2.13"
+            python_version: "3.9"
+          - ansible_core_version: "2.14"
+            python_version: "3.10"
+          - ansible_core_version: "2.15"
+            python_version: "3.11"
     steps:
-      - if: ${{ matrix.enabled }}
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Set up Python 3
-        if: ${{ matrix.enabled }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python_version }}
       - name: Upgrade pip
-        if: ${{ matrix.enabled }}
         run: |
           pip install --upgrade pip
       - name: Install requirements
-        if: ${{ matrix.enabled }}
         run: |
           pip install --upgrade ansible-core==${{ matrix.ansible_core_version }}
           pip install --upgrade -r .github/requirements-ansible-test_\
           ${{ matrix.ansible_core_version }}.txt
       - name: Ansible-Test Sanity
-        if: ${{ matrix.enabled }}
         run: |
           cd ansible_collections/controlware/utils/
           ansible-test sanity
+
+  ansible_test_units:
+    runs-on: ubuntu-22.04
+    needs: [pre_commit, ansible_test_sanity]
+    strategy:
+      fail-fast: false
+      matrix:
+        ansible_core_version: ["2.11", "2.12", "2.13", "2.14", "2.15"]
+        include:
+          - ansible_core_version: "2.12"
+            python_version: "3.8"
+          - ansible_core_version: "2.13"
+            python_version: "3.9"
+          - ansible_core_version: "2.14"
+            python_version: "3.10"
+          - ansible_core_version: "2.15"
+            python_version: "3.11"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Upgrade pip
+        run: |
+          pip install --upgrade pip
+      - name: Install requirements
+        run: |
+          pip install --upgrade ansible-core==${{ matrix.ansible_core_version }}
+          pip install --upgrade -r .github/requirements-ansible-test_\
+          ${{ matrix.ansible_core_version }}.txt
       - name: Ansible-Test Units
-        if: ${{ matrix.enabled }}
         run: |
           cd ansible_collections/controlware/utils/
           ansible-test units --venv
