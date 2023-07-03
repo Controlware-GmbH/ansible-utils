@@ -1,0 +1,115 @@
+---
+# This workflow will install Python dependencies and run ansible tests
+
+name: Ansible Collection Code Testing
+
+'on':
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  pre_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install requirements
+        run: |
+          pip install --upgrade pre-commit
+      - name: Run pre-commit
+        run: |
+          pre-commit run --all-files --color always
+
+  ansible_test_sanity:
+    runs-on: ubuntu-22.04
+    needs: [pre_commit]
+    strategy:
+      fail-fast: false
+      matrix:
+        ansible_core_version: ["2.11", "2.12", "2.13", "2.14", "2.15"]
+        include:
+          - ansible_core_version: "2.11"
+            python_version: "3.7"
+          - ansible_core_version: "2.12"
+            python_version: "3.8"
+          - ansible_core_version: "2.13"
+            python_version: "3.9"
+          - ansible_core_version: "2.14"
+            python_version: "3.10"
+          - ansible_core_version: "2.15"
+            python_version: "3.11"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Upgrade pip
+        run: |
+          pip install --upgrade pip
+      - name: Install requirements
+        run: |
+          pip install --upgrade ansible-core==${{ matrix.ansible_core_version }}
+          pip install --upgrade -r .github/requirements-ansible-test_\
+          ${{ matrix.ansible_core_version }}.txt
+      - name: Ansible-Test Sanity
+        run: |
+          cd ansible_collections/controlware/utils/
+          ansible-test sanity
+
+  pytest:
+    runs-on: ubuntu-22.04
+    needs: [pre_commit]
+    strategy:
+      fail-fast: false
+      matrix:
+        pypthon_version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Upgrade pip
+        run: |
+          pip install --upgrade pip
+      - name: Install requirements
+        run: |
+          pip install --upgrade ansible-core==2.15
+          pip install --upgrade pytest
+      - name: Test Units
+        run: |
+          python -m pytest ./
+
+  ansible_test_units:
+    runs-on: ubuntu-22.04
+    needs: [pre_commit, pytest]
+    strategy:
+      fail-fast: false
+      matrix:
+        ansible_core_version: ["2.14", "2.15"]
+        include:
+          - ansible_core_version: "2.14"
+            python_version: "3.10"
+          - ansible_core_version: "2.15"
+            python_version: "3.11"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Upgrade pip
+        run: |
+          pip install --upgrade pip
+      - name: Install requirements
+        run: |
+          pip install --upgrade ansible-core==${{ matrix.ansible_core_version }}
+          pip install --upgrade -r .github/requirements-ansible-test_\
+          ${{ matrix.ansible_core_version }}.txt
+      - name: Ansible-Test Units
+        run: |
+          cd ansible_collections/controlware/utils/
+          ansible-test units --venv

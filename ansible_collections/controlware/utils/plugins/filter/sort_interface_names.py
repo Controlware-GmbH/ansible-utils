@@ -1,7 +1,13 @@
 """Ansible and Jinja2 filter for sorting interface names of different vendors and platforms"""
+from __future__ import absolute_import, division, print_function
+from __future__ import annotations
 import re
 from ansible.errors import AnsibleFilterError
-from controlware.utils.plugins.module_utils.interface_set import InterfaceSet
+from ansible_collections.controlware.utils.plugins.module_utils.interface_set import (
+    InterfaceSet,
+)
+
+__metaclass__ = type
 
 
 class SortInfo:
@@ -132,13 +138,13 @@ def sort_interface_names(
     sort_info = SortInfo()
 
     if vendor not in sort_info.orders:
-        raise AnsibleFilterError("Vendor '%s' not supported." % vendor)
+        raise AnsibleFilterError(f"Vendor '{vendor}' not supported.")
     vendor_orders = sort_info.orders[vendor]
     vendor_sortings = sort_info.sortings[vendor]
 
     if plattform not in vendor_orders:
         raise AnsibleFilterError(
-            "Plattform '%s' for vendor '%s' not supported." % (plattform, vendor)
+            f"Plattform '{plattform}' for vendor '{vendor}' not supported."
         )
     active_order = vendor_orders[plattform]
     active_sorting = vendor_sortings[plattform]

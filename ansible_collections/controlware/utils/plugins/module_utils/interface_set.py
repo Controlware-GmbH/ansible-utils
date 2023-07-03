@@ -1,5 +1,12 @@
 """Helper class to handle interfaces"""
-from controlware.utils.plugins.module_utils.interface import Interface
+from __future__ import absolute_import, division, print_function
+from __future__ import annotations
+
+from ansible_collections.controlware.utils.plugins.module_utils.interface import (
+    Interface,
+)
+
+__metaclass__ = type
 
 
 class InterfaceSet:
