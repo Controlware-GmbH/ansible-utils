@@ -1,6 +1,10 @@
 """Pytest test definitions for ip filters"""
 import pytest
-from controlware.utils.plugins.filter.ip_filter import ipv4_range, ipsort, FilterModule
+from ansible_collections.controlware.utils.plugins.filter.ip_filter import (
+    ipv4_range,
+    ipsort,
+    FilterModule,
+)
 
 
 TEST_PAIR_LIST = [

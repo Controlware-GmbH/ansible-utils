@@ -1,6 +1,6 @@
 """Pytest test definitions for cs_int_ranges filter"""
 import pytest
-from controlware.utils.plugins.filter.sort_cs_int_ranges import (
+from ansible_collections.controlware.utils.plugins.filter.sort_cs_int_ranges import (
     FilterModule,
     sort_cs_int_ranges,
 )
