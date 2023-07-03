@@ -37,8 +37,8 @@ jobs:
           python-version: '3.7'
       - name: Install requirements
         run: |
-          pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
+          pip install --upgrade ansible-core${{ matrix.ansible_core_version }}
+          pip install --upgrade -r requirements-ansible-test.txt
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
@@ -64,8 +64,8 @@ jobs:
           python-version: '3.8'
       - name: Install requirements
         run: |
-          pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
+          pip install --upgrade ansible-core${{ matrix.ansible_core_version }}
+          pip install --upgrade -r requirements-ansible-test.txt
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
@@ -91,8 +91,8 @@ jobs:
           python-version: '3.9'
       - name: Install requirements
         run: |
-          pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
+          pip install --upgrade ansible-core${{ matrix.ansible_core_version }}
+          pip install --upgrade -r requirements-ansible-test.txt
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
@@ -119,8 +119,8 @@ jobs:
           python-version: '3.10'
       - name: Install requirements
         run: |
-          pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
+          pip install --upgrade ansible-core${{ matrix.ansible_core_version }}
+          pip install --upgrade -r requirements-ansible-test.txt
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
@@ -147,8 +147,8 @@ jobs:
           python-version: '3.11'
       - name: Install requirements
         run: |
-          pip install --upgrade \
-          ansible-core${{ matrix.ansible_core_version }} pycodestyle pytest
+          pip install --upgrade ansible-core${{ matrix.ansible_core_version }}
+          pip install --upgrade -r requirements-ansible-test.txt
       - name: Ansible-Test Sanity
         run: |
           cd ansible_collections/controlware/utils/
