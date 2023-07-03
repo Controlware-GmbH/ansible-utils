@@ -10,9 +10,7 @@ def check_integer_value(value: str | int, max_int: int) -> int:
     if value < 0:
         raise ValueError("Integer values must be >= 0")
     if 0 < max_int < value:
-        raise ValueError(
-            "Integer value '%d' is higher than limit of %d" % (value, max_int)
-        )
+        raise ValueError(f"Integer value '{value}' is higher than limit of {max_int}")
     return value
 
 
@@ -40,7 +38,7 @@ def string_list_to_integer_list(string_list: str, max_int: int) -> list[int]:
             )
         else:
             raise ValueError(
-                "'%s' is not a valid comma-separated integer range list." % string_list
+                f"'{string_list}' is not a valid comma-separated integer range list."
             )
     return integer_list
 
@@ -82,7 +80,7 @@ def cs_int_ranges(
 
     def add_range(str_list: list[str], s_id: int, e_id: int) -> list[str]:
         if s_id < e_id:
-            new_range = "%d-%d" % (s_id, e_id)
+            new_range = f"{s_id}-{e_id}"
         else:
             new_range = str(s_id)
 
@@ -135,10 +133,10 @@ def cs_int_ranges(
         i_int = int(i)
         if 0 < max_int < i_int or i_int < 0:
             raise ValueError(
-                "Integer value '%d' is greather than limit of %d" % (i_int, max_int)
+                f"Integer value '{i_int}' is greather than limit of {max_int}"
             )
         if i_int < 0:
-            raise ValueError("Unsupported negative integer value '%d'" % i_int)
+            raise ValueError(f"Unsupported negative integer value '{i_int}'")
         input_int_list.append(i_int)
     if not input_int_list:
         return []

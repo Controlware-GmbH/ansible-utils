@@ -138,13 +138,13 @@ def sort_interface_names(
     sort_info = SortInfo()
 
     if vendor not in sort_info.orders:
-        raise AnsibleFilterError("Vendor '%s' not supported." % vendor)
+        raise AnsibleFilterError(f"Vendor '{vendor}' not supported.")
     vendor_orders = sort_info.orders[vendor]
     vendor_sortings = sort_info.sortings[vendor]
 
     if plattform not in vendor_orders:
         raise AnsibleFilterError(
-            "Plattform '%s' for vendor '%s' not supported." % (plattform, vendor)
+            f"Plattform '{plattform}' for vendor '{vendor}' not supported."
         )
     active_order = vendor_orders[plattform]
     active_sorting = vendor_sortings[plattform]
