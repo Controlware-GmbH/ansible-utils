@@ -1,8 +1,11 @@
 """Pytest test definitions for Interface class"""
+from __future__ import absolute_import, division, print_function
 import pytest
 from ansible_collections.controlware.utils.plugins.module_utils.interface import (
     Interface,
 )
+
+__metaclass__ = type
 
 TEST_INIT_STRINGS = [
     "Loopback0",

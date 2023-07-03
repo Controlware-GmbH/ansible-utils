@@ -1,10 +1,13 @@
 """Pytest test definitions for ip filters"""
+from __future__ import absolute_import, division, print_function
 import pytest
 from ansible_collections.controlware.utils.plugins.filter.ip_filter import (
     ipv4_range,
     ipsort,
     FilterModule,
 )
+
+__metaclass__ = type
 
 
 TEST_PAIR_LIST = [

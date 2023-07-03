@@ -1,9 +1,12 @@
 """Pytest test definitions for cs_int_ranges filter"""
+from __future__ import absolute_import, division, print_function
 import pytest
 from ansible_collections.controlware.utils.plugins.filter.sort_cs_int_ranges import (
     FilterModule,
     sort_cs_int_ranges,
 )
+
+__metaclass__ = type
 
 
 TEST_PAIRS = [

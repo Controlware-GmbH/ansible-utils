@@ -1,9 +1,12 @@
 """Pytest test definitions for sort_interface_names filter"""
+from __future__ import absolute_import, division, print_function
 import pytest
 from ansible_collections.controlware.utils.plugins.filter.sort_interface_names import (
     sort_interface_names,
     FilterModule,
 )
+
+__metaclass__ = type
 
 TEST_LIST_PAIRS = [
     # params(interace_list, vendor, plattform), result
