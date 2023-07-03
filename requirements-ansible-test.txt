@@ -1,3 +1,4 @@
 pycodestyle
 pylint
 pytest
+yamllint
