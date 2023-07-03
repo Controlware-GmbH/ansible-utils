@@ -1,0 +1,5 @@
+pycodestyle
+pylint == 2.6.0
+pytest
+voluptuous
+yamllint
