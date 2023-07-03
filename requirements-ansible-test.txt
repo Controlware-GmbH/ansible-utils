@@ -1,4 +1,5 @@
 pycodestyle
 pylint
 pytest
+voluptuous
 yamllint
