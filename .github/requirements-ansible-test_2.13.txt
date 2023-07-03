@@ -1,6 +1,6 @@
 pycodestyle
 pylint
 pytest
-voluptuous
 pyyaml
+voluptuous
 yamllint

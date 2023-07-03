@@ -59,18 +59,38 @@ jobs:
           cd ansible_collections/controlware/utils/
           ansible-test sanity
 
-  ansible_test_units:
+  pytest:
     runs-on: ubuntu-22.04
-    needs: [pre_commit, ansible_test_sanity]
+    needs: [pre_commit]
     strategy:
       fail-fast: false
       matrix:
-        ansible_core_version: ["2.11", "2.12", "2.13", "2.14", "2.15"]
+        pypthon_version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Upgrade pip
+        run: |
+          pip install --upgrade pip
+      - name: Install requirements
+        run: |
+          pip install --upgrade ansible-core==2.15
+          pip install --upgrade pytest
+      - name: Test Units
+        run: |
+          python -m pytest ./
+
+  ansible_test_units:
+    runs-on: ubuntu-22.04
+    needs: [pre_commit, pytest]
+    strategy:
+      fail-fast: false
+      matrix:
+        ansible_core_version: ["2.14", "2.15"]
         include:
-          - ansible_core_version: "2.12"
-            python_version: "3.8"
-          - ansible_core_version: "2.13"
-            python_version: "3.9"
           - ansible_core_version: "2.14"
             python_version: "3.10"
           - ansible_core_version: "2.15"
