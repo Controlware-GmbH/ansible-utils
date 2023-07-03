@@ -2,6 +2,7 @@
 disable=
     consider-using-f-string,
     import-error,
+    invalid-name,
     missing-class-docstring,
     missing-function-docstring,
     too-few-public-methods,
