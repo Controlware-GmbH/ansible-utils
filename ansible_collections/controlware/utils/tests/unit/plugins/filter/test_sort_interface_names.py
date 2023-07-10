@@ -9,7 +9,7 @@ from ansible_collections.controlware.utils.plugins.filter.sort_interface_names i
 __metaclass__ = type
 
 TEST_LIST_PAIRS = [
-    # params(interace_list, vendor, plattform), result
+    # params(interace_list, vendor, platform), result
     (([], "cisco", "iosxe"), []),
     (
         (["GigabitEthernet2", "GigabitEthernet1", "Tunnel1"], "cisco", "IOS-XE"),
@@ -92,6 +92,6 @@ class TestSortInterfacesFilter:
     @pytest.mark.parametrize("param", TEST_LIST_PAIRS)
     def test_lists(self, param):
         test_param, ret_val = param
-        interfaces, vendor, plattform = test_param
-        resp = sort_interface_names(interfaces, vendor, plattform)
+        interfaces, vendor, platform = test_param
+        resp = sort_interface_names(interfaces, vendor, platform)
         assert resp == ret_val
