@@ -30,8 +30,8 @@ class SortInfo:
         }
 
         self.orders = {"cisco": {}}
-        for plattform in self.plattform_strings["cisco"]["iosxe"]:
-            self.orders["cisco"][plattform] = [
+        for platform in self.plattform_strings["cisco"]["iosxe"]:
+            self.orders["cisco"][platform] = [
                 "loopbacks",
                 "port_channels",
                 "tunnels",
@@ -40,8 +40,8 @@ class SortInfo:
                 "bvis",
                 "bdis",
             ]
-        for plattform in self.plattform_strings["cisco"]["nxos"]:
-            self.orders["cisco"][plattform] = [
+        for platform in self.plattform_strings["cisco"]["nxos"]:
+            self.orders["cisco"][platform] = [
                 "port_channels",
                 "tunnels",
                 "unspecific",
@@ -50,8 +50,8 @@ class SortInfo:
             ]
 
         self.sortings = {"cisco": {}}
-        for plattform in self.plattform_strings["cisco"]["iosxe"]:
-            self.sortings["cisco"][plattform] = {
+        for platform in self.plattform_strings["cisco"]["iosxe"]:
+            self.sortings["cisco"][platform] = {
                 "loopbacks": {
                     "regex": "loopback.*",
                     "list": self.interface_lists["loopbacks"],
@@ -75,8 +75,8 @@ class SortInfo:
                     "list": self.interface_lists["unspecific"],
                 },
             }
-        for plattform in self.plattform_strings["cisco"]["nxos"]:
-            self.sortings["cisco"][plattform] = {
+        for platform in self.plattform_strings["cisco"]["nxos"]:
+            self.sortings["cisco"][platform] = {
                 "loopbacks": {
                     "regex": "loopback.*",
                     "list": self.interface_lists["loopbacks"],
@@ -101,11 +101,11 @@ class SortInfo:
 
 
 def sort_interface_names(
-    interfaces: list[str], vendor: str, plattform: str
+    interfaces: list[str], vendor: str, platform: str
 ) -> list[str]:
     """
     sort_interface_names will sort a list of given interface names
-    in respect to given vendor and plattform.
+    with respect to given vendor and plattform.
 
     Parameters
     ----------
@@ -113,7 +113,7 @@ def sort_interface_names(
         List of interface names
     vendor: str
         allowed_values: ['cisco']
-    plattform: str
+    platform: str
         allowed_values: ['iosxe', 'nxos']
         # Also accepting ios, ios-xe, nexus, nx-os as well as strings with upper cases.
 
@@ -134,7 +134,7 @@ def sort_interface_names(
         --> ['Loopback0', 'Port-channel1', 'GigabitEthernet1', 'GigabitEthernet2']
     """
     vendor = vendor.lower()
-    plattform = plattform.lower()
+    platform = platform.lower()
     sort_info = SortInfo()
 
     if vendor not in sort_info.orders:
@@ -142,12 +142,12 @@ def sort_interface_names(
     vendor_orders = sort_info.orders[vendor]
     vendor_sortings = sort_info.sortings[vendor]
 
-    if plattform not in vendor_orders:
+    if platform not in vendor_orders:
         raise AnsibleFilterError(
-            f"Plattform '{plattform}' for vendor '{vendor}' not supported."
+            f"Plattform '{platform}' for vendor '{vendor}' not supported."
         )
-    active_order = vendor_orders[plattform]
-    active_sorting = vendor_sortings[plattform]
+    active_order = vendor_orders[platform]
+    active_sorting = vendor_sortings[platform]
 
     for interface in interfaces:
         for sort_entry in active_sorting:
