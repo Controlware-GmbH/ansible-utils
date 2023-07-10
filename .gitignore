@@ -161,3 +161,8 @@ cython_debug/
 
 # VScode
 .vscode/
+
+# Archives
+**/*.tar
+**/*.tar.gz
+**/*.zip
