@@ -31,7 +31,7 @@ Provided ansible and Jinja2 filters:
       - Restrictions: >= 11
   - Returns:
     - Type: list(str)
-      Description: List of comma-separated integer range strings
+    - Description: List of comma-separated integer range strings
 - **default**:
   - Description: Resturns given value, if defined and not None.
     Otherwise check given default values and returns first defined and
@@ -48,7 +48,7 @@ Provided ansible and Jinja2 filters:
       - Default: 0
   - Returns:
     - Type: any
-      Description: Value of 'value' or value of a 'default_value' or None
+    - Description: Value of 'value' or value of a 'default_value' or None
 - **ipv4_range**:
   - Description: Returns a list of all host addresses between
     'start' and 'end' address
@@ -65,7 +65,7 @@ Provided ansible and Jinja2 filters:
       - Default: '0.0.0.0'
   - Returns:
     - Type: list(str)
-      Description: List of strings representing IPv4 addresses within the range
+    - Description: List of strings representing IPv4 addresses within the range
 - **ipsort**:
   - Description: Sort a given list of IP address xor IP networks.
   - Parameters:
@@ -80,7 +80,7 @@ Provided ansible and Jinja2 filters:
       - Default: False
   - Returns:
     - Type: list(str) [representing IP addresses xor IP networks]
-      Description: Sorted list of strings representing IP addresses xor
+    - Description: Sorted list of strings representing IP addresses xor
       IP networks
 - **sort_cs_int_ranges**:
   - Description: Sort comma-separated integer range strings by sorting
@@ -92,7 +92,7 @@ Provided ansible and Jinja2 filters:
       - Required: Yes
   - Returns:
     - Type: list(str) [comma-separated integer range strings]
-      Description: Sorted list of comma-separated integer range strings
+    - Description: Sorted list of comma-separated integer range strings
 - **sort_interface_names**:
   - Description: Sort a list of given interface names with respect to
     given vendor and plattform.
@@ -116,4 +116,4 @@ Provided ansible and Jinja2 filters:
       - Remarks: Ignores upper-cases
   - Returns:
     - Type: list(str) [interface names]
-      Description: Sorted list of interface names
+    - Description: Sorted list of interface names
