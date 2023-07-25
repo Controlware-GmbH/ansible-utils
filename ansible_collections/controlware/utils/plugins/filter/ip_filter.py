@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 from __future__ import annotations
 from ipaddress import (
     ip_address,
+    ip_interface,
     ip_network,
 )
 
@@ -65,7 +66,7 @@ def ipsort(ip_strings: list, reverse: bool = False) -> list[str]:
     sort_ip(['10.0.1.0/24', '10.0.2.1/32'], reverse=True) --> ['10.0.2.1/32', '10.0.1.0/24']
     """
 
-    if len(ip_strings) == 0:
+    if not ip_strings:
         return []
 
     element_type = None
@@ -73,7 +74,17 @@ def ipsort(ip_strings: list, reverse: bool = False) -> list[str]:
         ip_address(ip_strings[0])
         element_type = ip_address
     except ValueError:
-        element_type = ip_network
+        try:
+            ip_network(ip_strings[0])
+            element_type = ip_network
+        except ValueError:
+            try:
+                ip_interface(ip_strings[0])
+                element_type = ip_interface
+            except ValueError as ve:
+                raise ValueError(
+                    "Given element is neither IP address, network nor interface."
+                ) from ve
 
     ip_list = []
     for element in ip_strings:
