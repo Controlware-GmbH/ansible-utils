@@ -57,6 +57,11 @@ TEST_MAX_LEN_NEXT = [
 TEST_RAISE_MAX_LEN_NEXT = [
     ([1, 2], 10),
 ]
+TEST_DUAL_INT_RANGES = [
+    # int_list, dual_int_ranges, expected_str_list
+    ([1, 2, 4, 5, 6], True, ["1-2,4-6"]),
+    ([1, 2, 4, 5, 6], False, ["1,2,4-6"]),
+]
 
 f = FilterModule()
 
@@ -113,6 +118,10 @@ class TestCiscoVlanListFilter:
         except ValueError:
             return
         assert resp is None
+
+    @pytest.mark.parametrize("values, dual_int_ranges, result", TEST_DUAL_INT_RANGES)
+    def test_dual_int_ranges(self, values, dual_int_ranges, result):
+        assert result == cs_int_ranges(values, dual_int_ranges=dual_int_ranges)
 
     def test_filter_registration(self):
         resp = f.filters()
