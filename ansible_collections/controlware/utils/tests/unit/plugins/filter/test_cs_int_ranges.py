@@ -61,6 +61,7 @@ TEST_DUAL_INT_RANGES = [
     # int_list, dual_int_ranges, expected_str_list
     ([1, 2, 4, 5, 6], True, ["1-2,4-6"]),
     ([1, 2, 4, 5, 6], False, ["1,2,4-6"]),
+    ([1, 3, 4], False, ["1,3,4"]),
 ]
 
 f = FilterModule()
