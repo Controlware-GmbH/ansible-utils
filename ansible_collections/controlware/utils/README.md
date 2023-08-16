@@ -29,6 +29,11 @@ Provided ansible and Jinja2 filters:
         containing comma-separated integer ranges
       - Required: False
       - Restrictions: >= 11
+    - dual_int_ranges:
+      - Type: bool
+      - Description: Select between 10-11 (dual_int_range) and 10,11
+      - Required: False
+      - Default: True
   - Returns:
     - Type: list(str)
     - Description: List of comma-separated integer range strings

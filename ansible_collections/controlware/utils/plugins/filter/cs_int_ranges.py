@@ -45,10 +45,13 @@ def string_list_to_integer_list(string_list: str, max_int: int) -> list[int]:
 
 def cs_int_ranges(
     values: list[str] | list[int] | str | dict,
-    max_int=0,
-    max_length=0,
-    max_length_next=None,
+    max_int: int = 0,
+    max_length: int = 0,
+    max_length_next: int = None,
+    dual_int_ranges: bool = True,
 ):
+    # pylint: disable=too-many-statements
+
     """
     cs_int_ranges will try to identify an integer information in values.
     Each integer must be 0<=x<=max_int!
@@ -61,6 +64,7 @@ def cs_int_ranges(
     max_int: int # >=0 ; 0 means don't use a limit
     max_length: int # >= 11 # max length of string
     max_length_next: int # >= 11 # max length of each string after first
+    dual_int_ranges: bool = True # Select between 10-11 (dual_int_range) and 10,11
 
     Returns
     -------
@@ -153,7 +157,11 @@ def cs_int_ranges(
             end_int = cur_int
             continue
         # We have a new range
-        return_list = add_range(return_list, start_int, end_int)
+        if not dual_int_ranges and start_int + 1 == end_int:
+            return_list = add_range(return_list, start_int, start_int)
+            return_list = add_range(return_list, end_int, end_int)
+        else:
+            return_list = add_range(return_list, start_int, end_int)
         start_int = cur_int
         end_int = cur_int
     return_list = add_range(return_list, start_int, end_int)
