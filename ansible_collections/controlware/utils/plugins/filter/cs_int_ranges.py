@@ -164,7 +164,12 @@ def cs_int_ranges(
             return_list = add_range(return_list, start_int, end_int)
         start_int = cur_int
         end_int = cur_int
-    return_list = add_range(return_list, start_int, end_int)
+
+    if not dual_int_ranges and start_int + 1 == end_int:
+        return_list = add_range(return_list, start_int, start_int)
+        return_list = add_range(return_list, end_int, end_int)
+    else:
+        return_list = add_range(return_list, start_int, end_int)
 
     return return_list
 
