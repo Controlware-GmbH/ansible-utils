@@ -1,36 +1,37 @@
-"""Ansible and Jinja2 filter for sorting comma-separated integer range lists"""
+# pylint: disable=wrong-import-position
 from __future__ import absolute_import, division, print_function
-from __future__ import annotations
+
+DOCUMENTATION = r"""
+module: sort_cs_int_ranges
+author: Korte Noack (@kornoa)
+version_added: "1.0.0"
+
+short_description: This filter sorts comma-separated integer range strings
+  by sorting first integer value in each string.
+description: "This filter sorts comma-separated integer range strings
+  by sorting first integer value in each string.
+  returns:
+    type: list
+    description: List of comma-separated integer range string
+    elements: str"
+
+options:
+  ranges_list:
+    type: list
+    description: List of comma-separated integer range strings
+    elements: str
+    required: true
+"""
+
+EXAMPLES = r"""
+sort_cs_int_ranges(["13", "2-10", "200-299", "16", "500-501"])
+--> ["2-10", "13", "16", "200-299", "500-501"]
+"""
 
 __metaclass__ = type
 
 
-def sort_cs_int_ranges(ranges_list: list[str]) -> list[str]:
-    """
-    sort_cs_int_ranges will sort comma-separated integer range strings
-    by sorting first integer value in each string.
-
-    Parameters
-    ----------
-    ranges_list:
-        list of comma-separated integer range strings
-
-    Returns
-    -------
-    list[str]
-        list of sorted comma-separated integer range strings
-
-    Example Jinja Code
-    ------------------
-    {% cs_int_list | controlware.utils.sort_cs_int_ranges() }}
-
-    Examples
-    --------
-    values: ['13', 2-10', '200-299', '16', '500-501']
-    max_length: 20
-    returns [2-10', '13', '16', '200-299', '500-501']
-    """
-
+def sort_cs_int_ranges(ranges_list: list) -> list:
     def get_first_integer_value(int_str):
         return int(int_str.split(",")[0].split("-")[0])
 
@@ -49,6 +50,8 @@ def sort_cs_int_ranges(ranges_list: list[str]) -> list[str]:
 
 
 class FilterModule:
+    # pylint: disable=too-few-public-methods
+
     def filters(self):
         return {
             "sort_cs_int_ranges": sort_cs_int_ranges,

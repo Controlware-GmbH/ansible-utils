@@ -1,3 +1,3 @@
-# ansible-utils
+# Ansible Collection - controlware.utils
 
-Ansible Collection with generic utils
+[Collection Documentation](ansible_collections/controlware/utils/README.md)
