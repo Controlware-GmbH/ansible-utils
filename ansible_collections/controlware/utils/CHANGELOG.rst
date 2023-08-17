@@ -5,6 +5,14 @@ Controlware.Utils Release Notes
 .. contents:: Topics
 
 
+v1.0.4
+======
+
+Minor Changes
+-------------
+
+- Improved filter documentation
+
 v1.0.3
 ======
 
