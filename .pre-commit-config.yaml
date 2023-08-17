@@ -34,3 +34,4 @@ repos:
     rev: v0.9.11
     hooks:
       - id: pymarkdown
+        args: ["-d", "MD033", "scan"]
