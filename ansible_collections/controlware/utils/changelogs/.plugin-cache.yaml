@@ -1,0 +1,49 @@
+objects:
+  role: {}
+plugins:
+  become: {}
+  cache: {}
+  callback: {}
+  cliconf: {}
+  connection: {}
+  filter:
+    cs_int_ranges:
+      description: This filter builds a list of comma-separated integer range list
+        strings from any given informationen containing integers or integer ranges.
+      name: cs_int_ranges
+      version_added: 1.0.0
+    default:
+      description: This filter tests and return the given value if defined and not
+        None. Otherwise check given other values and returns first defined and not
+        None.
+      name: default
+      version_added: 1.0.0
+    ipsort:
+      description: This filter sorts a given list of IP address xor IP networks.
+      name: ipsort
+      version_added: 1.0.0
+    ipv4_range:
+      description: This filter returns a list of all host addresses between start
+        and end address.
+      name: ipv4_range
+      version_added: 1.0.0
+    sort_cs_int_ranges:
+      description: This filter sorts comma-separated integer range strings by sorting
+        first integer value in each string.
+      name: sort_cs_int_ranges
+      version_added: 1.0.0
+    sort_interface_names:
+      description: This filter sorts a list of given interface names with respect
+        to given vendor and plattform.
+      name: sort_interface_names
+      version_added: 1.0.0
+  httpapi: {}
+  inventory: {}
+  lookup: {}
+  module: {}
+  netconf: {}
+  shell: {}
+  strategy: {}
+  test: {}
+  vars: {}
+version: 1.0.3

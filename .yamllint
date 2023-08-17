@@ -3,7 +3,7 @@
 extends: default
 
 ignore:
-  - 'ansible_collections/controlware/fortios_config/changelogs/*'
+  - 'ansible_collections/controlware/utils/changelogs/*'
 
 rules:
   indentation:

@@ -1,4 +1,5 @@
 ansible-core>=2.9
+antsibull-changelog
 black
 pre-commit
 pymarkdownlnt

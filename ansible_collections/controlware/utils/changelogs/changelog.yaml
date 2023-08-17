@@ -1,0 +1,52 @@
+ancestor: null
+releases:
+  1.0.0:
+    plugins:
+      filter:
+      - description: This filter builds a list of comma-separated integer range list
+          strings from any given informationen containing integers or integer ranges.
+        name: cs_int_ranges
+        namespace: null
+      - description: This filter tests and return the given value if defined and not
+          None. Otherwise check given other values and returns first defined and not
+          None.
+        name: default
+        namespace: null
+      - description: This filter sorts a given list of IP address xor IP networks.
+        name: ipsort
+        namespace: null
+      - description: This filter returns a list of all host addresses between start
+          and end address.
+        name: ipv4_range
+        namespace: null
+      - description: This filter sorts comma-separated integer range strings by sorting
+          first integer value in each string.
+        name: sort_cs_int_ranges
+        namespace: null
+      - description: This filter sorts a list of given interface names with respect
+          to given vendor and plattform.
+        name: sort_interface_names
+        namespace: null
+    release_date: '2023-08-17'
+  1.0.1:
+    changes:
+      minor_changes:
+      - '#10 Filter ipsort - Support IP interfaces (address/prefix)'
+    fragments:
+    - fix.yml
+    release_date: '2023-08-17'
+  1.0.2:
+    changes:
+      minor_changes:
+      - '#12 Filter cs_int_ranges: Add switch ''dual_int_ranges'''
+    fragments:
+    - '#12.yml'
+    release_date: '2023-08-17'
+  1.0.3:
+    changes:
+      bugfixes:
+      - '#14 Filter cs_int_ranges: dual_int_ranges==false does not respect last two
+        values'
+    fragments:
+    - '#14.yml'
+    release_date: '2023-08-17'
