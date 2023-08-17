@@ -159,9 +159,7 @@ class SortInfo:
             }
 
 
-def sort_interface_names(
-    interfaces: list[str], vendor: str, platform: str
-) -> list[str]:
+def sort_interface_names(interfaces: list, vendor: str, platform: str) -> list:
     vendor = vendor.lower()
     platform = platform.lower()
     sort_info = SortInfo()

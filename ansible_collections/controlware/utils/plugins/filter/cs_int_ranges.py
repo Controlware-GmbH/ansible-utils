@@ -54,10 +54,12 @@ cs_int_ranges(
 ) --> ["2-10,13,16,200-299", "500-501"]
 """
 
+from typing import Union
+
 __metaclass__ = type
 
 
-def check_integer_value(value: str | int, max_int: int) -> int:
+def check_integer_value(value: Union[str, int], max_int: int) -> int:
     value = int(value)
     if value < 0:
         raise ValueError("Integer values must be >= 0")
@@ -66,7 +68,7 @@ def check_integer_value(value: str | int, max_int: int) -> int:
     return value
 
 
-def string_list_to_integer_list(string_list: str, max_int: int) -> list[int]:
+def string_list_to_integer_list(string_list: str, max_int: int) -> list:
     """
     Parse a string representing a comma-separated list of integer ranges
     into a list of integers
@@ -96,16 +98,17 @@ def string_list_to_integer_list(string_list: str, max_int: int) -> list[int]:
 
 
 def cs_int_ranges(
-    values: list[str] | list[int] | str | dict,
+    values: Union[list, str, dict],
     max_int: int = 0,
     max_length: int = 0,
     max_length_next: int = None,
     dual_int_ranges: bool = True,
 ):
+    # pylint: disable=too-many-function-args
     # pylint: disable=too-many-statements
     # pylint: disable=too-many-branches
 
-    def add_range(str_list: list[str], s_id: int, e_id: int) -> list[str]:
+    def add_range(str_list: list, s_id: int, e_id: int) -> list:
         if s_id < e_id:
             new_range = f"{s_id}-{e_id}"
         else:

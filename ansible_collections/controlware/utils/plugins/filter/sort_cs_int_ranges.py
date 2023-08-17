@@ -31,7 +31,7 @@ sort_cs_int_ranges(["13", "2-10", "200-299", "16", "500-501"])
 __metaclass__ = type
 
 
-def sort_cs_int_ranges(ranges_list: list[str]) -> list[str]:
+def sort_cs_int_ranges(ranges_list: list) -> list:
     def get_first_integer_value(int_str):
         return int(int_str.split(",")[0].split("-")[0])
 

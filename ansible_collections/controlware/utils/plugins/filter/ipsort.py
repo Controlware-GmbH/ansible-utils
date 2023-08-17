@@ -43,7 +43,7 @@ from ipaddress import (
 __metaclass__ = type
 
 
-def ipsort(ip_strings: list, reverse: bool = False) -> list[str]:
+def ipsort(ip_strings: list, reverse: bool = False) -> list:
     if not ip_strings:
         return []
 

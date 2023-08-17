@@ -35,7 +35,7 @@ from ipaddress import ip_address
 __metaclass__ = type
 
 
-def ipv4_range(start: str = "0.0.0.0", end: str = "0.0.0.0") -> list[str]:
+def ipv4_range(start: str = "0.0.0.0", end: str = "0.0.0.0") -> list:
     ip_start = ip_address(start)
     ip_end = ip_address(end)
 
