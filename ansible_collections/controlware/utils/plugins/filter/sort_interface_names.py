@@ -1,4 +1,63 @@
+# pylint: disable=wrong-import-position
 from __future__ import absolute_import, division, print_function
+
+DOCUMENTATION = r"""
+module: sort_cs_int_ranges
+author: Korte Noack (@kornoa)
+version_added: "1.0.0"
+
+short_description: This filter sorts a list of given interface names with
+  respect to given vendor and plattform.
+description: "This filter sorts a list of given interface names with
+  respect to given vendor and plattform.
+  returns:
+    type: list
+    description: List of sorted interface names
+    elements: str"
+
+options:
+  interfaces:
+    type: list
+    description: List of interface name strings
+    elements: str
+    required: true
+  vendor:
+    type: str
+    description: Vendor name (case-insensitive)
+    required: true
+    choices:
+      - cisco
+  platform:
+    type: str
+    description: Platform name (case-insensitive)
+    required: true
+    choices:
+      - ios
+      - iosxe
+      - ios-xe
+      - nexus
+      - nxos
+      - nx-os
+"""
+
+EXAMPLES = r"""
+sort_interface_names(
+    [
+        "GigabitEthernet2",
+        "GigabitEthernet1",
+        "Loopback0",
+        "Port-channel1"
+    ],
+    "cisco",
+    "iosxe"
+) --> [
+    "Loopback0",
+    "Port-channel1",
+    "GigabitEthernet1",
+    "GigabitEthernet2"
+]
+"""
+
 import re
 from ansible.errors import AnsibleFilterError
 from ansible_collections.controlware.utils.plugins.module_utils.interface_set import (
@@ -103,36 +162,6 @@ class SortInfo:
 def sort_interface_names(
     interfaces: list[str], vendor: str, platform: str
 ) -> list[str]:
-    """
-    sort_interface_names will sort a list of given interface names
-    with respect to given vendor and plattform.
-
-    Parameters
-    ----------
-    interfaces : list[str]
-        List of interface names
-    vendor: str
-        allowed_values: ['cisco']
-    platform: str
-        allowed_values: ['iosxe', 'nxos']
-        # Also accepting ios, ios-xe, nexus, nx-os as well as strings with upper cases.
-
-    Returns
-    -------
-    list[str]
-        Sorted list fo interface names
-
-    Example Jinja Code
-    ------------------
-    {{ interfaces | controlware.utils.sort_interface_names('cisco', 'iosxe') }}
-
-    Examples
-    --------
-    sort_interface_names(
-        ['GigabitEthernet2', 'GigabitEthernet1', 'Loopback0', 'Port-channel1'],
-        'iosxe')
-        --> ['Loopback0', 'Port-channel1', 'GigabitEthernet1', 'GigabitEthernet2']
-    """
     vendor = vendor.lower()
     platform = platform.lower()
     sort_info = SortInfo()

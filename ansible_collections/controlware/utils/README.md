@@ -71,7 +71,7 @@ any given informationen containing integers or integer ranges.
 <td>
     <div>Maximum length of second and continueing returned strings containing
     comma-separated integer ranges.</br>
-    Must be 0 (infinite) or greater than 10.</div>
+    Must be greater than 10.</div>
 </td>
 </tr>
 
@@ -128,8 +128,8 @@ Otherwise check given other values and returns first defined and not None.
 <tr>
 <td>default_values<br/><div style="font-size: small;"></div></td>
 <td>any</td>
-<td>false</td>
-<td>0</td>
+<td>yes</td>
+<td></td>
 <td></td>
 <td>
     <div>Single value or list of values to check as default values</div>

@@ -13,7 +13,7 @@ description: "This filter returns a list of all host addresses between
   returns:
     type: list
     description: List of IPv4 Address Strings
-    elements: str
+    elements: str"
 
 options:
   start:
