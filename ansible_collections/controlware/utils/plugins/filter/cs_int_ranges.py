@@ -1,4 +1,54 @@
+# pylint: disable=wrong-import-position
 from __future__ import absolute_import, division, print_function
+
+DOCUMENTATION = r"""
+module: cs_int_ranges
+author: Korte Noack (@kornoa)
+version_added: "1.0.0"
+
+short_description: This filter builds a list of comma-separated integer range
+  list strings from any given informationen containing integers or
+  integer ranges.
+description: "This filter builds a list of comma-separated integer range
+  list strings from any given informationen containing integers or
+  integer ranges.
+  returns:
+    type: list
+    description: List of comma-separated integer range strings
+    elements: str"
+
+options:
+  values:
+    type: list[str] | list[int] | str | dict
+    description: Element(s) containing integer information
+    required: true
+  max_int:
+    type: int
+    description: "Maximum allowed integer value"
+    required: false
+    default: 0
+  max_length:
+    type: int
+    description: "Maximum length of first returned string containing
+      comma-separated integer ranges (0 or >10)"
+    required: false
+    default: 0
+  max_length_next:
+    type: int
+    description: "Maximum length of second and continueing returned
+      string containing comma-separated integer ranges (>10)"
+    required: false
+    default: 0
+  dual_int_ranges:
+    type: bool
+    description: "Select parsing mode of a range of two values.
+      I.E. select between '10-11' (dual_int_range) and '10,11'."
+    required: false
+    default: true
+"""
+
+EXAMPLES = r"""
+"""
 
 __metaclass__ = type
 

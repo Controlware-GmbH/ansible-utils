@@ -1,0 +1,10 @@
+---
+# Based on ansible-lint config
+extends: default
+
+ignore:
+  - 'ansible_collections/controlware/fortios_config/changelogs/*'
+
+rules:
+  indentation:
+    indent-sequences: whatever
