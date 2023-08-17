@@ -1,4 +1,3 @@
-"""Pytest test definitions for InterfaceSet class"""
 from __future__ import absolute_import, division, print_function
 import pytest
 from ansible_collections.controlware.utils.plugins.module_utils.interface_set import (
@@ -35,6 +34,7 @@ TEST_INIT_STRINGS = [
 
 
 class TestCiscoHelperInterfaceSet:
+    # pylint: disable=too-few-public-methods
     # Test valid interface names
     @pytest.mark.parametrize("param, result", TEST_INIT_STRINGS)
     def test_names(self, param, result):

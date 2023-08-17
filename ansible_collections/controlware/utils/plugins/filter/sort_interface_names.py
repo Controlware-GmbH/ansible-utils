@@ -1,6 +1,4 @@
-"""Ansible and Jinja2 filter for sorting interface names of different vendors and platforms"""
 from __future__ import absolute_import, division, print_function
-from __future__ import annotations
 import re
 from ansible.errors import AnsibleFilterError
 from ansible_collections.controlware.utils.plugins.module_utils.interface_set import (
@@ -11,6 +9,8 @@ __metaclass__ = type
 
 
 class SortInfo:
+    # pylint: disable=too-few-public-methods
+
     plattform_strings = {
         "cisco": {
             "iosxe": ["ios", "iosxe", "ios-xe"],
@@ -165,6 +165,7 @@ def sort_interface_names(
 
 
 class FilterModule:
-    @staticmethod
-    def filters():
+    # pylint: disable=too-few-public-methods
+
+    def filters(self):
         return {"sort_interface_names": sort_interface_names}

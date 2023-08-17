@@ -1,6 +1,4 @@
-"""Ansible and Jinja2 filters for handling IP objects"""
 from __future__ import absolute_import, division, print_function
-from __future__ import annotations
 from ipaddress import (
     ip_address,
     ip_interface,
@@ -99,6 +97,8 @@ def ipsort(ip_strings: list, reverse: bool = False) -> list[str]:
 
 
 class FilterModule:
+    # pylint: disable=too-few-public-methods
+
     def filters(self):
         return {
             "ipv4_range": ipv4_range,

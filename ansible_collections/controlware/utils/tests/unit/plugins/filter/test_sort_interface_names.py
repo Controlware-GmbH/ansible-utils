@@ -1,4 +1,3 @@
-"""Pytest test definitions for sort_interface_names filter"""
 from __future__ import absolute_import, division, print_function
 import pytest
 from ansible_collections.controlware.utils.plugins.filter.sort_interface_names import (
@@ -88,7 +87,7 @@ f = FilterModule()
 
 
 class TestSortInterfacesFilter:
-    #
+    # pylint: disable=too-few-public-methods
     @pytest.mark.parametrize("param", TEST_LIST_PAIRS)
     def test_lists(self, param):
         test_param, ret_val = param

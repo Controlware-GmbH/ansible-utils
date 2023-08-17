@@ -1,4 +1,3 @@
-"""Pytest test definitions for ip filters"""
 from __future__ import absolute_import, division, print_function
 import pytest
 from ansible_collections.controlware.utils.plugins.filter.ip_filter import (
@@ -23,7 +22,7 @@ f = FilterModule()
 
 
 class TestIpv4RangeFilter:
-    #
+    # pylint: disable=too-few-public-methods
     @pytest.mark.parametrize("start, end, result", TEST_PAIR_LIST)
     def test_successful(self, start, end, result):
         resp = ipv4_range(start, end)

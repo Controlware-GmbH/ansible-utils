@@ -1,4 +1,3 @@
-"""Ansible and Jinja2 filter to assign a default value to an attribute in path, if not existing"""
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
@@ -40,5 +39,7 @@ def default(value: any, *default_values: any) -> any:
 
 
 class FilterModule:
+    # pylint: disable=too-few-public-methods
+
     def filters(self):
         return {"default": default}

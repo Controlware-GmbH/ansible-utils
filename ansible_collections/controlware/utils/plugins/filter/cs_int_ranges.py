@@ -1,6 +1,4 @@
-"""Ansible and Jinja2 filter for handling comma-separated integer range lists"""
 from __future__ import absolute_import, division, print_function
-from __future__ import annotations
 
 __metaclass__ = type
 
@@ -51,6 +49,7 @@ def cs_int_ranges(
     dual_int_ranges: bool = True,
 ):
     # pylint: disable=too-many-statements
+    # pylint: disable=too-many-branches
 
     """
     cs_int_ranges will try to identify an integer information in values.
@@ -175,6 +174,8 @@ def cs_int_ranges(
 
 
 class FilterModule:
+    # pylint: disable=too-few-public-methods
+
     def filters(self):
         return {
             "cs_int_ranges": cs_int_ranges,
