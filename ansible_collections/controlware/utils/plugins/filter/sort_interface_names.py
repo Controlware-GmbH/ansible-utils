@@ -41,21 +41,21 @@ options:
 """
 
 EXAMPLES = r"""
-sort_interface_names(
-    [
-        "GigabitEthernet2",
-        "GigabitEthernet1",
-        "Loopback0",
-        "Port-channel1"
-    ],
-    "cisco",
-    "iosxe"
-) --> [
-    "Loopback0",
-    "Port-channel1",
-    "GigabitEthernet1",
-    "GigabitEthernet2"
-]
+# sort_interface_names(
+#     [
+#         "GigabitEthernet2",
+#         "GigabitEthernet1",
+#         "Loopback0",
+#         "Port-channel1"
+#     ],
+#     "cisco",
+#     "iosxe"
+# ) --> [
+#     "Loopback0",
+#     "Port-channel1",
+#     "GigabitEthernet1",
+#     "GigabitEthernet2"
+# ]
 """
 
 import re

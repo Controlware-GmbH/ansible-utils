@@ -1,0 +1,14 @@
+{
+    "name": "Ansible CW Utils Development",
+    "build": {"dockerfile": "Dockerfile"},
+    "postCreateCommand": "pre-commit install",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "waderyan.gitblame",
+                "ms-python.python",
+                "DavidAnson.vscode-markdownlint",
+            ]
+        }
+    }
+}

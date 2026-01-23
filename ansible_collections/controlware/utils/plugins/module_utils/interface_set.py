@@ -1,4 +1,5 @@
 """Helper class to handle interfaces"""
+
 from __future__ import absolute_import, division, print_function
 from __future__ import annotations
 
@@ -44,5 +45,4 @@ class InterfaceSet:
         return return_list
 
     def __iter__(self):
-        for each in self.interfaces:
-            yield each
+        yield from self.interfaces
