@@ -6,7 +6,7 @@ tags: [controlware, utils, tools, filters]
 authors:
   - Korte Noack (@kornoa)
 
-version: 1.0.3
+version: 2.0.0
 license_file: 'LICENSE'
 
 readme: README.md

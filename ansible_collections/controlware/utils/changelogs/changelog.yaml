@@ -57,3 +57,18 @@ releases:
     fragments:
     - v1.0.4.yml
     release_date: '2023-08-17'
+  2.0.0:
+    changes:
+      breaking_changes:
+      - Remove support for Ansible-Core 2.11
+      - Remove support for Ansible-Core 2.12
+      - Remove support for Ansible-Core 2.13
+      - Remove support for Ansible-Core 2.14
+      - Remove support for Ansible-Core 2.15
+      major_changes:
+      - Add Support for Ansible-Core 2.18
+      - Add Support for Ansible-Core 2.19
+      - Add Support for Ansible-Core 2.20
+    fragments:
+    - v2_0_0.yaml
+    release_date: '2026-01-23'

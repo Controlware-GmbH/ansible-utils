@@ -4,6 +4,24 @@ Controlware.Utils Release Notes
 
 .. contents:: Topics
 
+v2.0.0
+======
+
+Major Changes
+-------------
+
+- Add Support for Ansible-Core 2.18
+- Add Support for Ansible-Core 2.19
+- Add Support for Ansible-Core 2.20
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Remove support for Ansible-Core 2.11
+- Remove support for Ansible-Core 2.12
+- Remove support for Ansible-Core 2.13
+- Remove support for Ansible-Core 2.14
+- Remove support for Ansible-Core 2.15
 
 v1.0.4
 ======
