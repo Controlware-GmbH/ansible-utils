@@ -1,7 +1,10 @@
-ansible-core>=2.9
+ansible-core<2.19
+ansible-lint
+ansible-lint-junit
 antsibull-changelog
 black
 pre-commit
+pylint
 pymarkdownlnt
 pytest
 yamllint
