@@ -48,10 +48,10 @@ options:
 """
 
 EXAMPLES = r"""
-cs_int_ranges(
-    values=["2-10", "13", "16", "200-299", "500-501"],
-    max_length=20
-) --> ["2-10,13,16,200-299", "500-501"]
+# cs_int_ranges(
+#     values=["2-10", "13", "16", "200-299", "500-501"],
+#     max_length=20
+# ) --> ["2-10,13,16,200-299", "500-501"]
 """
 
 from typing import Union
