@@ -16,4 +16,6 @@ homepage: https://github.com/Controlware-GmbH/ansible-utils
 issues: https://github.com/Controlware-GmbH/ansible-utils/issues
 
 dependencies: {}
-build_ignore: []
+build_ignore:
+  - tests
+  - changelogs
