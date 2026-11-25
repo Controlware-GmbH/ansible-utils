@@ -55,3 +55,4 @@ jobs:
           cd ansible_collections/controlware/utils/
           ansible-test sanity
           ansible-test units --venv
+          ansible-test integration

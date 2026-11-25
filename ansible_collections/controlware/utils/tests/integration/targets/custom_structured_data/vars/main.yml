@@ -1,0 +1,131 @@
+---
+csdt_a_u_10:
+  tree:
+    old: 1
+    items: [old]
+  state: base
+
+csdt_a_m_20:
+  tree:
+    middle: 2
+    items: [middle]
+  state: merged
+
+csdt_a_u_30:
+  tree:
+    new: 3
+    items: [new]
+
+csdt_a_m_40:
+  tree:
+    after: 4
+    items: [tail, new]
+
+csdt_expected_order:
+  - csdt_a_u_10
+  - csdt_a_m_20
+  - csdt_a_u_30
+  - csdt_a_m_40
+
+csdt_expected_data:
+  tree:
+    new: 3
+    after: 4
+    items: [tail, new, new]
+  state: merged
+
+csdt_expected_changed:
+  tree:
+    new: 3
+    after: 99
+    items: [changed, new]
+  state: merged
+
+csdt_uonly_10:
+  tree:
+    first: 1
+
+csdt_uonly_20:
+  tree:
+    second: 2
+
+csdt_expected_update:
+  tree:
+    second: 2
+
+csdt_monly_10:
+  tree:
+    first: 1
+    nested:
+      a: 1
+  items: [one, two]
+  old_list: [a]
+  old_map:
+    nested: true
+  old_scalar: 7
+  nullable: old
+  host: "{{ inventory_hostname }}"
+
+csdt_monly_20:
+  tree:
+    second: 2
+    nested:
+      b: 2
+  items: [two, three]
+  old_list:
+    now: map
+  old_map: [now, list]
+  old_scalar: [new]
+  nullable: null
+
+csdt_expected_merge:
+  tree:
+    first: 1
+    second: 2
+    nested:
+      a: 1
+      b: 2
+  items: [two, three, one, two]
+  old_list:
+    now: map
+  old_map: [now, list]
+  old_scalar: [new]
+  nullable: null
+  host: "{{ inventory_hostname }}"
+
+csdt_tie_m_10:
+  value: merge
+
+csdt_tie_u_10:
+  value: update
+
+csdt_expected_tie:
+  value: update
+
+csdt_overlap_10:
+  tree:
+    first: 1
+
+csdt_overlap_m_20:
+  tree:
+    second: 2
+
+csdt_expected_overlap:
+  tree:
+    first: 1
+    second: 2
+
+csdt_lex_10:
+  value: ten
+
+csdt_lex_2:
+  value: two
+
+csdt_expected_lexical:
+  value: two
+
+csdt_bad_10:
+  valid: true
+
+csdt_bad_20:
+  - not-a-mapping

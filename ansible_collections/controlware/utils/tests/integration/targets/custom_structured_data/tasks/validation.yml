@@ -1,0 +1,130 @@
+---
+- name: Reject a missing output folder
+  controlware.utils.custom_structured_data:
+    custom_merge_prefix: csdt_monly_
+  check_mode: false
+  register: csdt_r_missing_folder
+  ignore_errors: true
+
+- name: Reject missing prefixes
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/invalid"
+  check_mode: false
+  register: csdt_r_missing_prefix
+  ignore_errors: true
+
+- name: Reject an empty prefix
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/invalid"
+    custom_update_prefix: ""
+  check_mode: false
+  register: csdt_r_empty_prefix
+  ignore_errors: true
+
+- name: Reject a null prefix
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/invalid"
+    custom_merge_prefix: null
+  check_mode: false
+  register: csdt_r_null_prefix
+  ignore_errors: true
+
+- name: Reject identical prefixes
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/invalid"
+    custom_update_prefix: csdt_same_
+    custom_merge_prefix: csdt_same_
+  check_mode: false
+  register: csdt_r_same_prefix
+  ignore_errors: true
+
+- name: Reject an unknown argument
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/invalid"
+    custom_update_prefix: csdt_uonly_
+    unknown_option: true
+  check_mode: false
+  register: csdt_r_unknown
+  ignore_errors: true
+
+- name: Reject a selected variable that is not a mapping
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/combined"
+    custom_update_prefix: csdt_bad_
+  check_mode: false
+  register: csdt_r_bad_value
+  ignore_errors: true
+
+- name: Read the existing file after the failed operation
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_written.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_after_failure
+
+- name: Inspect the invalid-operation output directory
+  ansible.builtin.stat:
+    path: "{{ csdt_tmp.path }}/invalid"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_invalid_dir
+
+- name: Verify validation failures and failure safety
+  ansible.builtin.assert:
+    that:
+      - csdt_r_missing_folder is failed
+      - "'Missing required argument: output_folder' in csdt_r_missing_folder.msg"
+      - csdt_r_missing_prefix is failed
+      - "'At least one' in csdt_r_missing_prefix.msg"
+      - csdt_r_empty_prefix is failed
+      - "'custom_update_prefix must be a non-empty string' in csdt_r_empty_prefix.msg"
+      - csdt_r_null_prefix is failed
+      - "'custom_merge_prefix must be a non-empty string' in csdt_r_null_prefix.msg"
+      - csdt_r_same_prefix is failed
+      - "'prefixes must differ' in csdt_r_same_prefix.msg"
+      - csdt_r_unknown is failed
+      - "'unknown_option' in csdt_r_unknown.msg"
+      - csdt_r_bad_value is failed
+      - "'csdt_bad_20' in csdt_r_bad_value.msg"
+      - csdt_r_after_failure.content == csdt_r_changed_content.content
+      - not csdt_r_invalid_dir.stat.exists
+
+- name: Create a directory for the symlink test
+  ansible.builtin.file:
+    path: "{{ csdt_tmp.path }}/link"
+    state: directory
+    mode: "0700"
+  delegate_to: localhost
+  become: false
+  check_mode: false
+
+- name: Create an output-path symlink
+  ansible.builtin.file:
+    src: "{{ csdt_r_written.path }}"
+    dest: "{{ csdt_tmp.path }}/link/{{ inventory_hostname }}.yml"
+    state: link
+  delegate_to: localhost
+  become: false
+  check_mode: false
+
+- name: Reject an output-path symlink
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/link"
+    custom_update_prefix: csdt_uonly_
+  check_mode: false
+  register: csdt_r_symlink
+  ignore_errors: true
+
+- name: Read the symlink target after the failed operation
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_written.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_after_symlink
+
+- name: Verify symlink rejection
+  ansible.builtin.assert:
+    that:
+      - csdt_r_symlink is failed
+      - "'not a regular file' in csdt_r_symlink.msg"
+      - csdt_r_after_symlink.content == csdt_r_changed_content.content

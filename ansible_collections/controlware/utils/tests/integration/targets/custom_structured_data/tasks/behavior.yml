@@ -1,0 +1,266 @@
+---
+- name: Predict creation in check mode
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/combined"
+    custom_update_prefix: csdt_a_u_
+    custom_merge_prefix: csdt_a_m_
+  check_mode: true
+  register: csdt_r_preview
+
+- name: Inspect the output directory after check mode
+  ansible.builtin.stat:
+    path: "{{ csdt_tmp.path }}/combined"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_preview_dir
+
+- name: Verify creation was predicted without writing
+  ansible.builtin.assert:
+    that:
+      - csdt_r_preview.changed
+      - not csdt_r_preview_dir.stat.exists
+      - csdt_r_preview.path == csdt_tmp.path ~ '/combined/' ~ inventory_hostname ~ '.yml'
+      - csdt_r_preview.processed_variables == csdt_expected_order
+
+- name: Write combined update and merge data
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/combined"
+    custom_update_prefix: csdt_a_u_
+    custom_merge_prefix: csdt_a_m_
+  check_mode: false
+  register: csdt_r_written
+
+- name: Read the combined output
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_written.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_original
+
+- name: Verify ordering, shallow update and recursive merge
+  ansible.builtin.assert:
+    that:
+      - csdt_r_written.changed
+      - csdt_r_written.processed_variables == csdt_expected_order
+      - (csdt_r_original.content | b64decode | from_yaml) == csdt_expected_data
+
+- name: Repeat the same operation
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/combined"
+    custom_update_prefix: csdt_a_u_
+    custom_merge_prefix: csdt_a_m_
+  check_mode: false
+  register: csdt_r_repeat
+
+- name: Verify idempotence
+  ansible.builtin.assert:
+    that:
+      - not csdt_r_repeat.changed
+
+- name: Check an unchanged file in check mode
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/combined"
+    custom_update_prefix: csdt_a_u_
+    custom_merge_prefix: csdt_a_m_
+  check_mode: true
+  register: csdt_r_unchanged_preview
+
+- name: Verify check mode reports no change
+  ansible.builtin.assert:
+    that:
+      - not csdt_r_unchanged_preview.changed
+
+- name: Predict an update to the existing file
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/combined"
+    custom_update_prefix: csdt_a_u_
+    custom_merge_prefix: csdt_a_m_
+  vars:
+    csdt_a_m_40:
+      tree:
+        after: 99
+        items: [changed]
+  check_mode: true
+  register: csdt_r_changed_preview
+
+- name: Read the file after the change prediction
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_written.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_after_preview
+
+- name: Verify check mode did not modify the file
+  ansible.builtin.assert:
+    that:
+      - csdt_r_changed_preview.changed
+      - csdt_r_after_preview.content == csdt_r_original.content
+
+- name: Write the changed data
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/combined"
+    custom_update_prefix: csdt_a_u_
+    custom_merge_prefix: csdt_a_m_
+  vars:
+    csdt_a_m_40:
+      tree:
+        after: 99
+        items: [changed]
+  check_mode: false
+  register: csdt_r_changed
+
+- name: Read the changed output
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_written.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_changed_content
+
+- name: Verify the changed output
+  ansible.builtin.assert:
+    that:
+      - csdt_r_changed.changed
+      - (csdt_r_changed_content.content | b64decode | from_yaml) == csdt_expected_changed
+
+- name: Repeat the changed operation
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/combined"
+    custom_update_prefix: csdt_a_u_
+    custom_merge_prefix: csdt_a_m_
+  vars:
+    csdt_a_m_40:
+      tree:
+        after: 99
+        items: [changed]
+  check_mode: false
+  register: csdt_r_changed_repeat
+
+- name: Verify the changed output is idempotent
+  ansible.builtin.assert:
+    that:
+      - not csdt_r_changed_repeat.changed
+
+- name: Use only the update prefix
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/update-only"
+    custom_update_prefix: csdt_uonly_
+  check_mode: false
+  register: csdt_r_update_only
+
+- name: Read the update-only output
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_update_only.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_update_content
+
+- name: Verify shallow update
+  ansible.builtin.assert:
+    that:
+      - csdt_r_update_only.changed
+      - csdt_r_update_only.processed_variables == ['csdt_uonly_10', 'csdt_uonly_20']
+      - (csdt_r_update_content.content | b64decode | from_yaml) == csdt_expected_update
+
+- name: Use only the merge prefix
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/merge-only"
+    custom_merge_prefix: csdt_monly_
+  check_mode: false
+  register: csdt_r_merge_only
+
+- name: Read the merge-only output
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_merge_only.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_merge_content
+
+- name: Verify recursive merge, list order and type replacement
+  ansible.builtin.assert:
+    that:
+      - csdt_r_merge_only.changed
+      - csdt_r_merge_only.processed_variables == ['csdt_monly_10', 'csdt_monly_20']
+      - (csdt_r_merge_content.content | b64decode | from_yaml) == csdt_expected_merge
+
+- name: Select no variables
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/empty"
+    custom_merge_prefix: csdt_nonexistent_7549_
+  check_mode: false
+  register: csdt_r_empty
+
+- name: Read the empty output
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_empty.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_empty_content
+
+- name: Verify the empty mapping
+  ansible.builtin.assert:
+    that:
+      - csdt_r_empty.changed
+      - csdt_r_empty.processed_variables == []
+      - (csdt_r_empty_content.content | b64decode | from_yaml) == {}
+
+- name: Test equal suffixes across prefixes
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/tie"
+    custom_update_prefix: csdt_tie_u_
+    custom_merge_prefix: csdt_tie_m_
+  check_mode: false
+  register: csdt_r_tie
+
+- name: Read the tie output
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_tie.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_tie_content
+
+- name: Verify the full variable name breaks ties
+  ansible.builtin.assert:
+    that:
+      - csdt_r_tie.processed_variables == ['csdt_tie_m_10', 'csdt_tie_u_10']
+      - (csdt_r_tie_content.content | b64decode | from_yaml) == csdt_expected_tie
+
+- name: Test overlapping prefixes
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/overlap"
+    custom_update_prefix: csdt_overlap_
+    custom_merge_prefix: csdt_overlap_m_
+  check_mode: false
+  register: csdt_r_overlap
+
+- name: Read the overlap output
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_overlap.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_overlap_content
+
+- name: Verify the longer matching prefix wins
+  ansible.builtin.assert:
+    that:
+      - csdt_r_overlap.processed_variables == ['csdt_overlap_10', 'csdt_overlap_m_20']
+      - (csdt_r_overlap_content.content | b64decode | from_yaml) == csdt_expected_overlap
+
+- name: Test lexical rather than numeric suffix ordering
+  controlware.utils.custom_structured_data:
+    output_folder: "{{ csdt_tmp.path }}/lexical"
+    custom_update_prefix: csdt_lex_
+  check_mode: false
+  register: csdt_r_lexical
+
+- name: Read the lexical ordering output
+  ansible.builtin.slurp:
+    src: "{{ csdt_r_lexical.path }}"
+  delegate_to: localhost
+  become: false
+  register: csdt_r_lexical_content
+
+- name: Verify lexical suffix ordering
+  ansible.builtin.assert:
+    that:
+      - csdt_r_lexical.processed_variables == ['csdt_lex_10', 'csdt_lex_2']
+      - (csdt_r_lexical_content.content | b64decode | from_yaml) == csdt_expected_lexical
