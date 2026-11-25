@@ -72,3 +72,17 @@ releases:
     fragments:
     - v2_0_0.yaml
     release_date: '2026-01-23'
+  2.1.0:
+    changes:
+      breaking_changes:
+      - Remove support for Ansible-Core 2.18
+      major_changes:
+      - Add Support for Ansible-Core 2.21
+      - Add new module 'custom_structure_config'
+    fragments:
+    - v2_1_0.yaml
+    modules:
+    - description: Combine selected variables into a YAML file
+      name: custom_structured_data
+      namespace: ''
+    release_date: '2026-11-25'

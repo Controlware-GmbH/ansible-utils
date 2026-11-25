@@ -1,6 +1,5 @@
 pycodestyle
 pylint
 pytest
-six
 voluptuous
 yamllint
