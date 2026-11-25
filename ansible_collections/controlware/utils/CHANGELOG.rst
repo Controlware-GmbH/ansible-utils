@@ -4,6 +4,25 @@ Controlware.Utils Release Notes
 
 .. contents:: Topics
 
+v2.1.0
+======
+
+Major Changes
+-------------
+
+- Add Support for Ansible-Core 2.21
+- Add new module 'custom_structure_config'
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Remove support for Ansible-Core 2.18
+
+New Modules
+-----------
+
+- controlware.utils.custom_structured_data - Combine selected variables into a YAML file
+
 v2.0.0
 ======
 

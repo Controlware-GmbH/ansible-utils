@@ -6,6 +6,8 @@ plugins:
   callback: {}
   cliconf: {}
   connection: {}
+  eda_event_filter: {}
+  eda_event_source: {}
   filter:
     cs_int_ranges:
       description: This filter builds a list of comma-separated integer range list
@@ -40,10 +42,15 @@ plugins:
   httpapi: {}
   inventory: {}
   lookup: {}
-  module: {}
+  module:
+    custom_structured_data:
+      description: Combine selected variables into a YAML file
+      name: custom_structured_data
+      namespace: ''
+      version_added: 2.1.0
   netconf: {}
   shell: {}
   strategy: {}
   test: {}
   vars: {}
-version: 2.0.0
+version: 2.1.0
